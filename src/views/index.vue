@@ -123,6 +123,25 @@
         <el-button type="info" @click="dialogVisible = false" plain>取消</el-button>
       </span>
     </el-dialog>
+    <el-dialog :visible="loginVisible" title="請輸入帳號密碼" :show-close="false">
+      <el-row justify="center">
+        <el-col :span="5"> 帳號： </el-col>
+        <el-col :span="19">
+          <el-input v-model="account"></el-input>
+        </el-col>
+      </el-row>
+      <el-row justify="center">
+        <el-col :span="5"> 密碼： </el-col>
+        <el-col :span="19">
+          <el-input v-model="password" show-password></el-input>
+        </el-col>
+      </el-row>
+      <el-row justify="end">
+        <el-col :span="5">
+          <el-button plain @click="login">登入</el-button>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -149,6 +168,9 @@ export default {
       dialogTitle: '',
       percentage: 0,
       localRelation: [],
+      account: '',
+      password: '',
+      loginVisible: true,
     };
   },
   watch: {
@@ -170,7 +192,20 @@ export default {
     },
   },
   methods: {
+    login() {
+      if (this.account === 'Dr.Lee' && this.password === '33661181') {
+        this.loginVisible = false;
+      }
+    },
     download() {
+      if (!window.localStorage.getItem('localR')) {
+        this.$message({
+          showClose: true,
+          message: '本次並無新增的資料',
+          type: 'error',
+        });
+        return;
+      }
       const tmp = window.localStorage.getItem('localR');
       const jtmp = JSON.parse(tmp);
       let element = document.createElement('a');
