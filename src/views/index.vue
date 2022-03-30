@@ -22,14 +22,7 @@
     </el-row>
     <el-row :gutter="22" type="flex" justify="center" align="middle" style="margin-top: 10px">
       <el-col :span="2">
-        <el-button
-          type="primary"
-          icon="el-icon-arrow-left"
-          @click="move(0)"
-          :disabled="index === 0"
-          class="switchBtn"
-          plain
-        ></el-button>
+        <el-button type="primary" @click="move(0)" :disabled="index === 0" class="switchBtn" plain>&lt;</el-button>
       </el-col>
       <el-col :span="14">
         <el-card shadow="always" style="width: 100%; height: 200px">
@@ -42,14 +35,9 @@
         </el-card>
       </el-col>
       <el-col :span="2">
-        <el-button
-          type="primary"
-          icon="el-icon-arrow-right"
-          @click="move(1)"
-          :disabled="index === fiDa.length - 1"
-          class="switchBtn"
-          plain
-        ></el-button>
+        <el-button type="primary" @click="move(1)" :disabled="index === fiDa.length - 1" class="switchBtn" plain
+          >&gt;</el-button
+        >
       </el-col>
     </el-row>
     <el-row :gutter="22" type="flex" justify="center" style="margin-top: 20px">
@@ -96,7 +84,7 @@
               </el-row>
             </el-col>
             <el-col :span="6">
-              <el-checkbox v-model="coumpoundCheckList[idx]" border :disabled="disableList[idx]">新關係</el-checkbox>
+              <el-checkbox v-model="coumpoundCheckList[idx]" border>新關係</el-checkbox>
             </el-col>
           </el-row>
         </div>
@@ -157,7 +145,6 @@ export default {
       predicates: {},
       keepList: [],
       coumpoundCheckList: [],
-      disableList: [],
       linkList: [],
       selectionClass: [],
       reversSen: {},
@@ -239,7 +226,7 @@ export default {
         }),
       };
       this.localRelation.push(tmp);
-      this.index += 1;
+      this.move(1);
       window.localStorage.setItem('localR', JSON.stringify(this.localRelation));
     },
     move(i) {
@@ -253,14 +240,12 @@ export default {
       this.predicates = {};
       this.keepList = [];
       this.coumpoundCheckList = [];
-      this.disableList = [];
       this.selectionClass = [];
       this.opacity = [];
       this.predicates = ob.predicates.reduce(
         (res, cur) => {
           if (!cur.check.length) {
             this.coumpoundCheckList.push(false);
-            this.disableList.push(false);
             res.extension.push(cur);
           } else {
             this.keepList.push(false);
@@ -271,7 +256,6 @@ export default {
         },
         { check: [], extension: [] }
       );
-
       this.predicates.check.map((o, idx) => {
         o.relationId = idx;
       });
