@@ -224,6 +224,8 @@ export default {
     },
     confirmEditLabel() {
       this.dialogVisible = false;
+      this.coumpoundCheckList = [];
+      this.keepList = [];
       window.localStorage.setItem('labelID', this.index + 1);
       const tmp = {
         senID: this.fiDa[this.index]['sentence_id'],
